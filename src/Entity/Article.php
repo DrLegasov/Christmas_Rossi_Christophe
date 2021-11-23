@@ -3,7 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -18,12 +22,21 @@ class Article
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="bigint")
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *      min = 13,
+     *      max = 13,
+     *      minMessage = "l'ean doit comporte {{ limit }} chiffres de longueur",
+     *      maxMessage = "l'ean doit comporte {{ limit }} chiffres de longueur"
+     * )
      */
     private $ean;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank
+     * 
      */
     private $name;
 
@@ -66,6 +79,22 @@ class Article
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $manuel;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="article")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="article")
+     */
+    private $tag;
+
+    public function __construct()
+    {
+        $this->tag = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -188,6 +217,42 @@ class Article
     public function setManuel(?string $manuel): self
     {
         $this->manuel = $manuel;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTag(): Collection
+    {
+        return $this->tag;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tag->contains($tag)) {
+            $this->tag[] = $tag;
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        $this->tag->removeElement($tag);
 
         return $this;
     }

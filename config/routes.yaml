@@ -1,3 +1,8 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+app_login:
+  path: /Login/{title}
+  controller: App\Controller\SecurityController::login
+  defaults:
+    title: 'Authentification'
