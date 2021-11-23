@@ -1,4 +1,16 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="container justify-content-center form-group ">
+    {{ form_start(form) }}
+            <p class="help-block my-3">{{ form_label(form.name) }}</p>
+            <p class="help-block my-3">{{ form_widget(form.name) }}</p>            
+            <p class="help-block my-3">{{ form_label(form.teaser) }}</p>
+            <p class="help-block my-3">{{ form_widget(form.teaser) }}</p>
+    
+            <p class="help-block my-3">{{ form_label(form.picture) }}</p>
+            <p class="help-block my-3">{{ form_widget(form.picture) }}</p>    
+            
+
+    
+            <button class="btn btn-outline-dark">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+
+</div>

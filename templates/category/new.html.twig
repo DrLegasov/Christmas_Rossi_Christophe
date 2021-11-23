@@ -3,9 +3,9 @@
 {% block title %}New Category{% endblock %}
 
 {% block body %}
-    <h1>Create new Category</h1>
+    <h1 class="article-title mx-5" >Creation de Catégorie</h1>
 
     {{ include('category/_form.html.twig') }}
 
-    <a href="{{ path('category_index') }}">back to list</a>
+    <a class="btn btn-secondary mx-5" href="{{ path('category_index') }}">retour à la liste</a>
 {% endblock %}

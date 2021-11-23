@@ -17,6 +17,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArticleController extends AbstractController
 {
     /**
+     * @Route("/users", name="article_users", methods={"GET"})
+     */
+    public function userList(ArticleRepository $articleRepository): Response
+    {
+        return $this->render('article/userlistview.html.twig', [
+            'articles' => $articleRepository->findAll(),
+        ]);
+    }
+    /**
      * @Route("/", name="article_index", methods={"GET"})
      */
     public function index(ArticleRepository $articleRepository): Response
